@@ -103,7 +103,7 @@ def generateDataFromMarkovMatrix(markovMatrix, period = 15):
 	# print output, len(output)
 	return output
 # Evaluate 1 compares the distribution of number of transitions each day for both the generated and testing actual data
-def evaluate1(dailyStates, size = 1000, basepath = '../../alllogs/'):
+def evaluate1(dailyStates, size = 1000, basepath = 'alllogs/'):
 	print "length of dailyStates,", len(dailyStates)
 	print "size: ", size
 	assert len(dailyStates) == size
@@ -156,13 +156,13 @@ def countTransitions(dayStates):
 			currentState = state
 	return total
 
-def doMarkovNaive(testSampleSize = 1000):
-	totalTransitionMatrix = np.matrix([[0,0,0], [0,0,0], [0,0,0]])
+def doMarkovNaive(testSampleSize = 1000, parse=True):
+	totalTransitionMatrix = np.matrix([[.905,.088,.007], [.587,.352, .061], [.209,.322,.469]])
 
 	limit = testSampleSize
 	finished = False
 	parse = True
-	basepath = '../../alllogs/'
+	basepath = 'alllogs/'
 
 	try:
 		os.listdir(basepath)
@@ -193,9 +193,8 @@ def doMarkovNaive(testSampleSize = 1000):
 					# print totalTransitionMatrix
 
 	# print "Training finished."
-	# print totalTransitionMatrix
 	normed_matrix = computeProbabilityMatrix(totalTransitionMatrix)
-	# print normed_matrix
+	#print normed_matrix
 
 
 	testTransitionMatrix = np.matrix([[0,0,0], [0,0,0], [0,0,0]])
@@ -216,13 +215,18 @@ def doMarkovNaive(testSampleSize = 1000):
 	normed_matrix_test = computeProbabilityMatrix(testTransitionMatrix)
 	# print normed_matrix_test
 
+	#print dailyStates
+	print dailyStates[0], len(dailyStates[0])
+
 	evaluate1(dailyStates, size = testSampleSize)
 
 
 
 
 if __name__ == '__main__':
+	doMarkovNaive(1000, False)
 
+"""
 	currentPath = os.getcwd() + "../../"
 	oldpath = "../../alllogs"
 
@@ -293,5 +297,6 @@ if __name__ == '__main__':
 	plt.plot(plotted)
 	plt.ylabel('Distribtuton')
 	plt.savefig("1.png")
+"""
 
 	
